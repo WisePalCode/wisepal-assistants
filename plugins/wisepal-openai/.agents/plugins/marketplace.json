@@ -1,0 +1,17 @@
+{
+  "name": "wisepal",
+  "plugins": [
+    {
+      "category": "Productivity",
+      "name": "wisepal",
+      "policy": {
+        "authentication": "ON_USE",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./",
+        "source": "local"
+      }
+    }
+  ]
+}

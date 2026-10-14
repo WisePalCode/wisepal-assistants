@@ -1,0 +1,14 @@
+{
+  "description": "Free US wireless, internet and TV bill negotiation inside your assistant.",
+  "name": "wisepal",
+  "owner": {
+    "name": "WisePal"
+  },
+  "plugins": [
+    {
+      "description": "Free US wireless, internet and TV bill negotiation inside your assistant.",
+      "name": "wisepal",
+      "source": "./plugins/wisepal-claude"
+    }
+  ]
+}

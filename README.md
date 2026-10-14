@@ -40,3 +40,23 @@ An installation through the skills CLI still uses this GitHub package's attribut
 the package does not infer which directory or website led the user here.
 
 Package version: 1.0.0. License: MIT-0.
+
+## Local plugins
+
+The plugins run on the user's computer with Python; signup does not require a WisePal login.
+
+Claude Code users can add this marketplace and install the plugin:
+
+```sh
+claude plugin marketplace add WisePalCode/wisepal-assistants
+claude plugin install wisepal@wisepal
+```
+
+Codex users can add the marketplace, then install WisePal from the local plugin directory:
+
+```sh
+codex plugin marketplace add WisePalCode/wisepal-assistants
+```
+
+Plugin version: 1.0.1. Directory submissions and approvals are separate from this public distribution.
+The Grok template and version 1.0.0 downloads remain available in the [release](https://github.com/WisePalCode/wisepal-assistants/releases/tag/v1.0.0).

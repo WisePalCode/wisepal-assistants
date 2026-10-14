@@ -1,0 +1,17 @@
+{
+  "author": {
+    "name": "WisePal",
+    "url": "https://wisepal.com"
+  },
+  "description": "Free US wireless, internet and TV bill negotiation, completed in your assistant.",
+  "documentationUrl": "https://github.com/WisePalCode/wisepal-assistants/tree/main/plugins/wisepal-claude",
+  "homepage": "https://wisepal.com",
+  "icon": "./assets/icon.png",
+  "license": "MIT-0",
+  "name": "wisepal",
+  "privacyPolicyUrl": "https://wisepal.com/privacy-policy",
+  "repository": "https://github.com/WisePalCode/wisepal-assistants",
+  "supportUrl": "https://github.com/WisePalCode/wisepal-assistants/issues",
+  "termsOfServiceUrl": "https://wisepal.com/terms",
+  "version": "1.0.1"
+}

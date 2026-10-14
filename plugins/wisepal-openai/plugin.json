@@ -1,0 +1,44 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "author": {
+    "name": "WisePal",
+    "url": "https://wisepal.com"
+  },
+  "description": "Free US wireless, internet and TV bill negotiation, completed in your assistant.",
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "capabilities": [
+          "Read",
+          "Write"
+        ],
+        "category": "Productivity",
+        "composerIcon": "./assets/icon.png",
+        "defaultPrompt": [
+          "Help me lower my internet bill with WisePal."
+        ],
+        "developerName": "WisePal",
+        "displayName": "WisePal Free Bill Negotiation",
+        "logo": "./assets/icon.png",
+        "longDescription": "Free US wireless, internet and TV bill negotiation, completed in your assistant. Runs locally with Python and private persistent storage. The assistant collects and validates details, shows exact legal terms, and obtains explicit consent before arranging real provider calls. No WisePal login or payment method is needed. Savings are not guaranteed; updates go by SMS and email.",
+        "privacyPolicyURL": "https://wisepal.com/privacy-policy",
+        "shortDescription": "Free bill negotiation",
+        "supportURL": "https://github.com/WisePalCode/wisepal-assistants/issues",
+        "termsOfServiceURL": "https://wisepal.com/terms",
+        "websiteURL": "https://wisepal.com"
+      },
+      "requires_local_executor": true
+    }
+  },
+  "homepage": "https://wisepal.com",
+  "keywords": [
+    "bill-negotiation",
+    "internet",
+    "wireless",
+    "tv"
+  ],
+  "license": "MIT-0",
+  "name": "wisepal",
+  "repository": "https://github.com/WisePalCode/wisepal-assistants",
+  "version": "1.0.1"
+}
