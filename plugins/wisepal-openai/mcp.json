@@ -1,0 +1,13 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "wisepal": {
+      "headers": {
+        "X-WisePal-Campaign": "assistant-launch",
+        "X-WisePal-Distribution": "chatgpt-plugin-directory"
+      },
+      "type": "streamable-http",
+      "url": "https://my.wisepal.com/mcp"
+    }
+  }
+}

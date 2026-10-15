@@ -1,17 +1,11 @@
-# WisePal free bill negotiation (openai, 1.0.1)
+# WisePal (openai, 2.0.0)
 
-Free US wireless, internet and TV bill negotiation, completed in your assistant. No WisePal login, preconfigured API key or payment method is required.
+Free US wireless, internet and TV bill negotiation, completed in your assistant.
 
-Requires Python 3.10+ and an assistant runtime with a private, persistent filesystem and outbound HTTPS. The assistant runs `skills/wisepal/scripts/wisepal.py`; the CLI needs no third-party dependencies. Read `skills/wisepal/SKILL.md` before onboarding.
+The hosted MCP is https://my.wisepal.com/mcp (Streamable HTTP). Cloud runtimes use Google OAuth. Only assistant-created accounts can onboard; Google sign-in creates no customer by itself. Explicit confirmation and legal consent are required before provider calls.
 
-Install this plugin/skill in a private per-user runtime. Keep `~/.wisepal/agent-onboarding` outside the package and preserve it across updates. Do not run one shared credential directory for unrelated users. For ephemeral runtimes, arrange private persistent storage before starting.
+This cloud plugin uses runtime OAuth discovery. Select OAuth in the submission portal. No local executor or Python helper is included.
 
-## Privacy Policy
+Keep original version 1 clients/private state for existing submissions, or recover using Google with the same email and known submission UUID. Never create a duplicate signup.
 
-WisePal's [Privacy Policy](https://wisepal.com/privacy-policy) and [Terms of Use](https://wisepal.com/terms) apply. Onboarding sends the details the user confirms to `https://my.wisepal.com`: contact information, US address, selected providers, account phones and known account details, including required provider PINs. No mailbox access, provider password or bill upload is requested. Exact legal consent is collected before any negotiation starts. Submission credentials remain in private local files and are never returned by the CLI. The package reports its distribution; assistant identity stays unknown unless its launcher supplies it.
-
-## Install
-
-```sh
-codex plugin marketplace add WisePalCode/wisepal-assistants
-```
+[Privacy policy](https://wisepal.com/privacy-policy) · [Terms](https://wisepal.com/terms)

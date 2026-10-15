@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "wisepal": {
+      "headers": {
+        "X-WisePal-Campaign": "assistant-launch",
+        "X-WisePal-Distribution": "claude-plugin"
+      },
+      "type": "http",
+      "url": "https://my.wisepal.com/mcp"
+    }
+  }
+}

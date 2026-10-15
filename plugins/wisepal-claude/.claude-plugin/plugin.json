@@ -8,10 +8,11 @@
   "homepage": "https://wisepal.com",
   "icon": "./assets/icon.png",
   "license": "MIT-0",
+  "mcpServers": "./.mcp.json",
   "name": "wisepal",
   "privacyPolicyUrl": "https://wisepal.com/privacy-policy",
   "repository": "https://github.com/WisePalCode/wisepal-assistants",
   "supportUrl": "https://github.com/WisePalCode/wisepal-assistants/issues",
   "termsOfServiceUrl": "https://wisepal.com/terms",
-  "version": "1.0.1"
+  "version": "2.0.0"
 }

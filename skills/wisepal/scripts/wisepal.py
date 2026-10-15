@@ -4,7 +4,6 @@ import hashlib
 import json
 import os
 import re
-import secrets
 import stat
 import sys
 import tempfile
@@ -18,17 +17,22 @@ DEFAULT_BASE_URL = "https://my.wisepal.com"
 MAX_INPUT_BYTES = 32768
 
 
-def submission_token(directory, submission_id, *, create):
+def submission_token(directory, submission_id, *, create, bootstrap=None):
     """Publish a private token atomically before any HTTP request; never overwrite."""
     directory.mkdir(mode=0o700, parents=True, exist_ok=True)
     if stat.S_IMODE(directory.stat().st_mode) & 0o077:
         raise ValueError("Credential directory must be private")
     path = directory / (str(submission_id) + ".token")
     if create and not path.exists():
+        if bootstrap is None:
+            raise ValueError("Server credential bootstrap is required")
+        token = bootstrap()
+        if not isinstance(token, str) or not re.fullmatch(r"wpg_[A-Za-z0-9_-]{43}", token):
+            raise ValueError("Credential bootstrap failed")
         descriptor, temporary = tempfile.mkstemp(dir=directory)
         try:
             with os.fdopen(descriptor, "w") as file:
-                file.write(secrets.token_urlsafe(32))
+                file.write(token)
                 file.flush()
                 os.fsync(file.fileno())
             try:
@@ -48,7 +52,7 @@ def submission_token(directory, submission_id, *, create):
         if stat.S_IMODE(os.fstat(file.fileno()).st_mode) & 0o077:
             raise ValueError("Credential file must be private")
         token = file.read(129)
-    if not re.fullmatch(r"[A-Za-z0-9_-]{43,128}", token):
+    if not re.fullmatch(r"wpg_[A-Za-z0-9_-]{43}", token):
         raise ValueError("Invalid stored credential; restore it rather than replacing it")
     return token
 
@@ -64,7 +68,8 @@ def client_paths(base_url, state_dir=None):
     root = base_url.rstrip("/")
     directory = Path(state_dir or Path.home() / ".wisepal" / "agent-onboarding")
     directory /= hashlib.sha256(root.encode()).hexdigest()
-    return root + "/api/agent-onboarding/v1/submissions", directory
+    directory /= "v2"
+    return root + "/api/agent-onboarding/v2/submissions", directory
 
 
 class NoRedirect(HTTPRedirectHandler):
@@ -83,7 +88,7 @@ def attribution_headers(distribution_id, assistant="unknown", campaign="unknown"
 def request_json(method, url, token, payload=None, *, headers=None):
     data = json.dumps(payload, allow_nan=False).encode() if payload is not None else None
     request = Request(url, data=data, method=method, headers={
-        "Authorization": "Bearer " + token,
+        **({"Authorization": "Bearer " + token} if token else {}),
         "Content-Type": "application/json",
         "Accept": "application/json",
         **(headers or {}),
@@ -93,7 +98,7 @@ def request_json(method, url, token, payload=None, *, headers=None):
     except HTTPError as error:
         response = error
     with response:
-        if response.status in {200, 401, 404, 409, 413, 415, 422, 429, 503}:
+        if response.status in {200, 201, 400, 401, 403, 404, 409, 413, 415, 422, 429, 503}:
             result = json.load(response)
             if isinstance(result, dict):
                 return result
@@ -104,10 +109,14 @@ def call_api(operation, submission_id, payload=None, *, base_url=DEFAULT_BASE_UR
     submission_id = UUID(str(submission_id))
     base, directory = client_paths(base_url, state_dir)
     try:
-        token = submission_token(directory, submission_id, create=operation == "begin")
+        legacy = directory.parent / (str(submission_id) + ".token")
+        if legacy.exists():
+            return {"error": "legacy_submission", "recovery": "Resume this submission with the original version 1 client, or connect with Google using the same email. Never create a duplicate signup."}
+        token = submission_token(directory, submission_id, create=operation == "begin",
+            bootstrap=lambda: request_json("POST", base_url.rstrip("/") + "/api/agent-onboarding/v2/credentials", "").get("access_token"))
     except FileNotFoundError:
         return {"error": "credentials_missing", "recovery": "Restore the connector's private state for the original submission. Do not create a duplicate negotiation."}
-    except (OSError, ValueError):
+    except (OSError, URLError, ValueError):
         return {"error": "credentials_unavailable", "recovery": "Restore or repair the connector's private credential storage, then retry the original submission."}
     url = base if operation == "begin" else base + "/" + str(submission_id)
     if operation in {"details", "approve"}:
@@ -122,6 +131,7 @@ def call_api(operation, submission_id, payload=None, *, base_url=DEFAULT_BASE_UR
 def main():
     parser = argparse.ArgumentParser(description="WisePal free bill negotiation; JSON input through stdin.")
     commands = parser.add_subparsers(dest="operation", required=True)
+    commands.add_parser("headers", help="Runtime credential hook ONLY: emits secret Authorization JSON; never invoke as a model tool.")
     commands.add_parser("new-id", help="Generate a UUID to retain for this submission and all retries.")
     commands.add_parser("begin", help="Register name, mobile, email and selected services; no calls.")
     for name in ["details", "approve", "status"]:
@@ -131,7 +141,15 @@ def main():
     command.add_argument("step", choices=["begin", "details", "approve"])
     args = parser.parse_args()
     try:
-        if args.operation == "new-id":
+        if args.operation == "headers":
+            base_url = os.environ.get("WISEPAL_API_BASE_URL", DEFAULT_BASE_URL)
+            _, directory = client_paths(base_url, os.environ.get("WISEPAL_AGENT_STATE_DIR"))
+            token = submission_token(directory / "connection", "runtime", create=True,
+                bootstrap=lambda: request_json("POST", base_url.rstrip("/") + "/api/agent-onboarding/v2/credentials", "").get("access_token"))
+            package = json.loads((Path(__file__).resolve().parent.parent / "distribution.json").read_text())
+            result = {"Authorization": "Bearer " + token, **attribution_headers(package["distribution_id"],
+                os.environ.get("WISEPAL_ASSISTANT", package["assistant"]), package["campaign"])}
+        elif args.operation == "new-id":
             result = {"idempotency_key": str(uuid4())}
         elif args.operation == "schema":
             path = Path(__file__).resolve().parent.parent / "references" / "request-schemas.json"
