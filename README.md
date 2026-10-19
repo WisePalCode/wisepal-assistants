@@ -6,28 +6,24 @@ savings are not guaranteed. Updates go directly to the user's SMS/email.
 
 ## Connectors and directories
 
-Choose an installation route below. A downloadable package is separate from approval
-in an assistant's official directory. Claude and Muse submissions were confirmed on
-October 19, 2026; other directory checkpoints are from October 18. Update these
-statuses when approval or publication is confirmed.
+Choose your assistant below to install WisePal or check its availability.
 
 | Assistant or directory | Connector and links | Availability |
 | --- | --- | --- |
-| OpenClaw / ClawHub | [WisePal on ClawHub](https://clawhub.ai/wisepal/wisepal) · [autonomous skill](skills/wisepal/SKILL.md) | Published skill, version 2.0.0. |
-| Codex | [OpenAI/Codex remote MCP plugin](plugins/wisepal-openai) · [installation](#connect-with-hosted-mcp) | Public direct install from this repository. |
-| Claude Code | [Claude remote MCP plugin](plugins/wisepal-claude) · [installation](#connect-with-hosted-mcp) | Public direct install from this repository. |
-| ChatGPT / OpenAI directory | [OpenAI connector package](plugins/wisepal-openai) | Directory version 2.0.2 submitted for review on October 18; public listing not yet confirmed. The repository package remains version 2.0.0. |
-| Dots | [Shared OpenAI connector](plugins/wisepal-openai) | Intended to use the OpenAI distribution route; Dots runtime acceptance has not been independently verified. |
-| Claude connector directory | [Claude connector package](plugins/wisepal-claude) | Submitted for directory review; approval and public listing have not yet been confirmed. Claude Code direct installation is available separately. |
-| Muse | [OAuth OpenAPI draft](https://github.com/WisePalCode/wisepal-assistants/releases/download/v2.0.0/muse-openapi.json) | Submitted for directory review; approval and public listing have not yet been confirmed. |
-| Grok / Grok Bot | [Template instructions](https://github.com/WisePalCode/wisepal-assistants/releases/download/v2.0.0/grok-template.md) · [skill package](https://github.com/WisePalCode/wisepal-assistants/releases/download/v2.0.0/wisepal-grok.zip) | Prepared distribution; public bot publication still needs an eligible publisher account and per-user credential-isolation validation. |
-| skills.sh / portable skills | [WisePal skill](skills/wisepal/SKILL.md) · [installation](#install-the-autonomous-skill) · [download](https://github.com/WisePalCode/wisepal-assistants/releases/download/v2.0.0/wisepal-skills-sh.zip) | GitHub-based installation is available; a discoverable skills.sh directory listing has not been confirmed. |
-| Smithery | [Hosted MCP connection](#connect-with-hosted-mcp) · [Smithery](https://smithery.ai/) | Planned distribution; no published WisePal listing has been verified. |
-| Cursor, VS Code / Copilot, Gemini CLI and other assistants | [Connection options](#other-assistants) | Manual integration candidates; individual end-to-end workflows have not been verified. |
+| OpenClaw / ClawHub | [WisePal on ClawHub](https://clawhub.ai/wisepal/wisepal) · [autonomous skill](skills/wisepal/SKILL.md) | Available. |
+| Codex | [OpenAI/Codex remote MCP plugin](plugins/wisepal-openai) · [installation](#connect-with-hosted-mcp) | Available. |
+| Claude Code | [Claude remote MCP plugin](plugins/wisepal-claude) · [installation](#connect-with-hosted-mcp) | Available. |
+| ChatGPT / OpenAI directory | [OpenAI connector package](plugins/wisepal-openai) | Pending review / approval. |
+| Dots | [Shared OpenAI connector](plugins/wisepal-openai) | Planned via OpenAI; not yet verified. |
+| Claude connector directory | [Claude connector package](plugins/wisepal-claude) | Pending review / approval. |
+| Muse | [Connector specification](https://github.com/WisePalCode/wisepal-assistants/releases/download/v2.0.0/muse-openapi.json) | Pending review / approval. |
+| Grok / Grok Bot | [Template instructions](https://github.com/WisePalCode/wisepal-assistants/releases/download/v2.0.0/grok-template.md) · [skill package](https://github.com/WisePalCode/wisepal-assistants/releases/download/v2.0.0/wisepal-grok.zip) | Template available; public bot not yet available. |
+| skills.sh / portable skills | [WisePal skill](skills/wisepal/SKILL.md) · [installation](#install-the-autonomous-skill) · [download](https://github.com/WisePalCode/wisepal-assistants/releases/download/v2.0.0/wisepal-skills-sh.zip) | Install from GitHub. |
+| Smithery | [Hosted MCP connection](#connect-with-hosted-mcp) · [Smithery](https://smithery.ai/) | Planned. |
+| Cursor, VS Code / Copilot, Gemini CLI and other assistants | [Connection options](#other-assistants) | Manual setup; not yet verified. |
 
-The [2.0.0 release](https://github.com/WisePalCode/wisepal-assistants/releases/tag/v2.0.0)
-contains the published connector archives and prepared Muse/Grok artifacts.
-Pending entries link to their packages or connection details until a public listing exists.
+Download connector packages from the
+[2.0.0 release](https://github.com/WisePalCode/wisepal-assistants/releases/tag/v2.0.0).
 
 ## Connect with hosted MCP
 
